@@ -17,12 +17,12 @@ router.get('/', function(req, res, next) {
 
 router.get('/geocode', function(req, res, next) {
   var db = req.db
-  var collection = db.get('branches');
+  var collection = db.get('');
   collection.find({},{},function(e,docs){
     var i = 0;
     docs.forEach(function(place) {
       console.log(place.latitude)
-      var address = place.street + ", " + place.city + ", " + place.state + " " + place.zip;
+      var address = place.address;
         if (place.latitude != undefined) {
           console.log(i)
           console.log(place)
@@ -33,7 +33,7 @@ router.get('/geocode', function(req, res, next) {
                 if (res[0]) {
                   var latlong = res[0].latitude + ", " + res[0].longitude;
                   console.log(latlong)
-                  collection.update({"_id": place._id}, {"name": place.name,"street": place.street,"city": place.city,"state": place.state, "zip": place.zip, "icon": place.icon ,"longitude": res[0].longitude, "latitude": res[0].latitude}, function(err) {
+                  collection.update({"_id": place._id}, {"name": place.name,"address": place.address, "phone": place.phone ,"longitude": res[0].longitude, "latitude": res[0].latitude}, function(err) {
                     if (err) {
                       console.log(err)
                     }
@@ -44,7 +44,7 @@ router.get('/geocode', function(req, res, next) {
           });
       }
     })
-    res.render('geocode', { "response": "success"});
+    res.render('geocode', { "responses": "success"});
   })
 })
 
