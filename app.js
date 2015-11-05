@@ -9,7 +9,7 @@ var moment = require('moment');
 
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('');
+var db = monk('mongodb://telegraph:1844@ds031903.mongolab.com:31903/sunshinemills_marketing');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
